@@ -2,6 +2,11 @@ const express = require('express')
 const app = express()
 const porta = 80 
 
+
+app.listen(porta, () => {
+    console.log(`Servidor em execução na porta ${porta}`);
+  });
+
 app.get('/', (req, res) =>{
 
     const rotaPadrao =
@@ -30,6 +35,22 @@ app.post('/clientes/novo', (req, res) => {
     res.json(response)
 })
 
-app.listen(porta, () => {
-    console.log(`Servidor em execução na porta ${porta}`);
-  });
+
+
+  //atualizar cliente
+  app.put('/clientes/update/cpfcnpj/12345678901', (req, res) => {
+
+    const response = [
+        {
+            mensagem: 'dados atualizados com  sucesso',
+            status: 200
+        }
+    ]
+
+    res.status(200)
+    res.json(response)
+})
+
+
+
+
