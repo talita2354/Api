@@ -51,6 +51,20 @@ app.post('/clientes/novo', (req, res) => {
     res.json(response)
 })
 
+app.delete('/clientes/delete/cpfcnpj/12345678901', (req, res) => {
+
+    const response = [
+        {
+            mensagem: 'cliente deletado com sucesso',
+            status: 201
+        }
+    ]
+
+    res.status(200)
+    res.json(response)
+})
+
+
 
 
 
