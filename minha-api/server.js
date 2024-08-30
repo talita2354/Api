@@ -16,6 +16,20 @@ app.get('/', (req, res) =>{
     res.json(rotaPadrao)
 })
 
-app.listen(porta,() =>{
-    console.log(`Servidor rodando na porta ${porta}`)
+// Cria usuarios
+app.post('/clientes/novo', (req, res) => {
+
+    const response = [
+        {
+            mensagem: 'Cliente criado com sucesso',
+            status: 201
+        }
+    ]
+
+    res.status(201)
+    res.json(response)
 })
+
+app.listen(porta, () => {
+    console.log(`Servidor em execução na porta ${porta}`);
+  });
