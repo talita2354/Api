@@ -1,70 +1,37 @@
-const express = require('express')
-const app = express()
-const porta = 80 
+const express = require('express');
+const app = express();
 
+// Simulação de uma base de dados de API Keys
+const API_KEYS = {
+  'valid-api-key-12345': 'User1',
+  'valid-api-key-67890': 'User2'
+};
 
-app.listen(porta, () => {
-    console.log(`Servidor em execução na porta ${porta}`);
+// Middleware para verificar a API Key
+function checkApiKey(req, res, next) {
+  const apiKey = req.header('x-api-key'); // Obtém a API Key do cabeçalho da solicitação
+
+  if (!apiKey || !API_KEYS[apiKey]) {
+    return res.status(401).json({
+      mensagem: 'acesso nao autorizado',
+      cod_status: 401
+    });
+  }
+  
+  // Chave válida, pode prosseguir
+  next();
+}
+
+// Endpoint protegido por autenticação com API Key
+app.get('/', checkApiKey, (req, res) => {
+  res.status(200).json({
+    mensagem: 'acesso autorizado',
+    cod_status: 200
   });
+});
 
-app.get('/', (req, res) =>{
-
-    const rotaPadrao =
-    {
-        nome_rota: '/',
-        codigo_status: '200 OK',
-        metodo_http: 'GET',
-        
-    }
-
-    res.status(200)
-    res.json(rotaPadrao)
-})
-
-// Cria usuarios
-app.post('/clientes/novo', (req, res) => {
-
-    const response = [
-        {
-            mensagem: 'Cliente criado com sucesso',
-            status: 201
-        }
-    ]
-
-    res.status(201)
-    res.json(response)
-})
-
-
-
-  //atualizar cliente
-  app.put('/clientes/update/cpfcnpj/12345678901', (req, res) => {
-
-    const response = [
-        {
-            mensagem: 'dados atualizados com  sucesso',
-            status: 200
-        }
-    ]
-
-    res.status(200)
-    res.json(response)
-})
-
-app.delete('/clientes/delete/cpfcnpj/12345678901', (req, res) => {
-
-    const response = [
-        {
-            mensagem: 'cliente deletado com sucesso',
-            status: 201
-        }
-    ]
-
-    res.status(200)
-    res.json(response)
-})
-
-
-
-
-
+// Inicia o servidor
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
