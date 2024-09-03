@@ -3,8 +3,8 @@ const app = express();
 
 // Simulação de uma base de dados de API Keys
 const API_KEYS = {
-  'valid-api-key-12345': 'User1',
-  'valid-api-key-67890': 'User2'
+  '12345': 'User1',
+  '67890': 'User2'
 };
 
 // Middleware para verificar a API Key
